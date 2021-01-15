@@ -12,10 +12,19 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles';
 import Input from './Input';
 
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isSignup, setIsSignup] = useState(false);
+  const [form, setForm] = useState(initialState);
   const classes = useStyles();
-  const isSignup = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +33,12 @@ const Auth = () => {
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+  const switchMode = () => {
+    setForm(initialState);
+    setIsSignup((prevIsSignup) => !prevIsSignup);
+    setShowPassword(false);
+  };
+
   return (
     <Container component='main' maxWidth='xs'>
       <Paper className={classes.paper} elevation={3}>
@@ -86,7 +101,7 @@ const Auth = () => {
 
           <Grid container justify='flex-end'>
             <Grid item>
-              <Button>
+              <Button onClick={switchMode} color='inherit'>
                 {isSignup
                   ? 'Already have an account? Sign in'
                   : "Don't have an account? Sign Up"}
